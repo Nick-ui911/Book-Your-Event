@@ -17,8 +17,8 @@ const eventCardSchema = new mongoose.Schema({
   },
   paymentStatus: {
     type: String,
-    enum: ['success', 'failed'],
-    default: 'success'
+    enum: ['captured', 'failed', 'pending'],
+    default: 'pending'
   },
   cardIssuedAt: {
     type: Date,

@@ -19,7 +19,10 @@ export async function POST(req) {
     // 🔹 Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return NextResponse.json({ message: "Email already exists" }, { status: 400 });
+      return NextResponse.json(
+        { message: "Email already exists" },
+        { status: 400 }
+      );
     }
 
     // 🔹 Hash password
@@ -36,7 +39,7 @@ export async function POST(req) {
     const savedUser = await user.save();
 
     // 🔹 Generate JWT Token
-    const token = savedUser.getJWT(); // assuming it's a method in user model
+    const token = await savedUser.getJWT(); // assuming it's a method in user model
 
     const cookieStore = await cookies(); // ✅ Now this is already async safe
     cookieStore.set({
@@ -53,6 +56,9 @@ export async function POST(req) {
     });
   } catch (error) {
     console.error("Signup Error:", error.message);
-    return NextResponse.json({ message: "Failed to save user data." }, { status: 500 });
+    return NextResponse.json(
+      { message: "Failed to save user data." },
+      { status: 500 }
+    );
   }
 }

@@ -37,7 +37,7 @@ export async function POST(req) {
     }
 
     // Generate JWT Token
-    const token = user.getJWT();
+    const token = await user.getJWT();
 
     const cookieStore = await cookies(); // ✅ Now this is already async safe
     cookieStore.set({
@@ -50,7 +50,7 @@ export async function POST(req) {
 
     // Return user data
     return NextResponse.json({
-      message: "User created successfully",
+      message: "Logged In Successfully",
       data: user,
     });
   } catch (error) {

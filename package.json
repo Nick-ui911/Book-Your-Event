@@ -7,13 +7,15 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "backend":"nodemon src/app/api/route.js"
+    "backend": "nodemon src/app/api/route.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.7",
     "express": "^5.1.0",
+    "framer-motion": "^12.6.5",
     "jsonwebtoken": "^9.0.2",
+    "lucide-react": "^0.487.0",
     "mongodb": "^6.15.0",
     "mongoose": "^8.13.2",
     "next": "15.2.1",

@@ -16,9 +16,17 @@ const eventSchema = new mongoose.Schema({
     type: String, // Like "5:00 PM"
     required: true
   },
+  eventUrl:{
+    type:String,
+    
+  },
   location: {
     type: String,
     required: true
+  },
+  address:{
+    type:String,
+    required:true
   },
   eventFee: {
     type: Number,
@@ -35,4 +43,4 @@ const eventSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('Event', eventSchema);
+export default mongoose.models.Event || mongoose.model("Event", eventSchema);
