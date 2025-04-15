@@ -17,16 +17,17 @@ import {
   MessageSquare,
   Shield,
 } from "lucide-react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Footer() {
   const [email, setEmail] = useState("");
 
   const handleSubscribe = (e) => {
     e.preventDefault();
-    alert(`Thanks for subscribing with: ${email}`);
+    toast.success(`Thanks for subscribing with: ${email}`);
     setEmail("");
   };
-
   const currentYear = new Date().getFullYear();
 
   return (
@@ -175,6 +176,7 @@ export default function Footer() {
               onSubmit={handleSubscribe}
               className="flex flex-col space-y-2"
             >
+              <ToastContainer />
               <div className="flex">
                 <input
                   type="email"

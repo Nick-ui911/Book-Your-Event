@@ -14,7 +14,7 @@ export default function Home() {
       date: "May 15-17, 2025",
       location: "San Francisco, CA",
       attendees: 1500,
-      image: "/api/placeholder/300/200"
+      image: ""
     },
     {
       id: 2,
@@ -22,7 +22,7 @@ export default function Home() {
       date: "June 5-7, 2025",
       location: "Austin, TX",
       attendees: 5000,
-      image: "/api/placeholder/300/200"
+      image: ""
     },
     {
       id: 3,
@@ -30,7 +30,7 @@ export default function Home() {
       date: "July 21-23, 2025",
       location: "New York, NY",
       attendees: 800,
-      image: "/api/placeholder/300/200"
+      image: ""
     }
   ];
   
@@ -81,7 +81,7 @@ export default function Home() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/signup" className="w-full sm:w-auto">
+              <Link href="/login" className="w-full sm:w-auto">
                 <button className="w-full px-8 py-3 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition text-lg font-medium">
                   Get Started Free
                 </button>
@@ -112,9 +112,9 @@ export default function Home() {
               <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mb-6">
                 <Calendar size={24} className="text-purple-600" />
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">Create & Manage Events</h3>
+              <h3 className="text-xl font-semibold text-gray-900 mb-3">Post & Manage Events</h3>
               <p className="text-gray-600">
-                Easily create, publish, and manage your events with our intuitive dashboard and powerful tools.
+                Easily post, publish, and manage your events with our intuitive dashboard and powerful tools.
               </p>
             </div>
             
