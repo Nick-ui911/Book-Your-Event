@@ -1,7 +1,7 @@
 "use client";
 import axios from "axios";
-import { useRouter } from 'next/navigation'; // Import for navigation
-import { useState, useEffect } from "react";
+import { useRouter } from 'next/navigation';
+import { useState } from "react";
 import {
   ChevronRight,
   Mail,
@@ -27,10 +27,10 @@ export default function AuthComponent() {
   const [errorMessage, setErrorMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
-  const [loading, setLoading] = useState(false); // Loading state
-  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
-  const router = useRouter(); // Initialize router for navigation
+  const router = useRouter();
+ 
 
   const handleViewToggle = () => {
     setIsLoginView(!isLoginView);
@@ -41,7 +41,7 @@ export default function AuthComponent() {
   // Standard Login Function
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError(""); // Reset error before request
+    setErrorMessage(""); // Reset error before request
     setLoading(true); // Show loader
 
     // Form validation
@@ -57,32 +57,39 @@ export default function AuthComponent() {
         { email, password },
         { withCredentials: true }
       );
-      dispatch(addUser(res.data));
-
-      // Navigate to homepage after successful signup
-      router.push("/");
+      
+      // Only dispatch user and show success if we get here (no error was thrown)
+      dispatch(addUser(res.data?.data));
+      // console.log("user -"+res.data?.data)
+      
+      // Show success message
+      setSuccessMessage("Login Successful! Welcome back!");
+      setShowSuccessMessage(true);
+      
+      // Reset form after success
+      setTimeout(() => {
+        setShowSuccessMessage(false);
+        setEmail("");
+        setPassword("");
+        
+        // Navigate to homepage after successful login
+        router.push("/");
+      }, 2000);
+      
     } catch (error) {
-      setError(error?.response?.data || "Login failed. Try again.");
-      console.log(error?.response?.data || "Login failed. Try again.")
+      // Handle error appropriately
+      setErrorMessage(error?.response?.data?.message || "Login failed. Please check your credentials and try again.");
+      console.log(error?.response?.data?.message || "Login failed. Try again.");
+      setShowSuccessMessage(false); // Ensure success message is not shown
     } finally {
       setLoading(false); // Hide loader
     }
-
-    // Show success message
-    setSuccessMessage("Login Successful! Welcome back!");
-    setShowSuccessMessage(true);
-
-    // Reset form after success (simulating successful login)
-    setTimeout(() => {
-      setShowSuccessMessage(false);
-      setEmail("");
-      setPassword("");
-    }, 2000);
   };
 
   // Standard Signup Function
   const handleSignup = async(e) => {
     e.preventDefault();
+    setErrorMessage(""); // Reset error before request
     setLoading(true); // Show loader
 
     // Form validation
@@ -91,34 +98,40 @@ export default function AuthComponent() {
       setLoading(false); // Hide loader
       return;
     }
+    
     try {
       const res = await axios.post(
         BASE_URL + "/signup",
         {name, email, password },
         { withCredentials: true }
       );
+      
+      // Only dispatch user and show success if we get here (no error was thrown)
       dispatch(addUser(res.data));
-
-      // Navigate to homepage after successful signup
-      router.push("/");
+      
+      // Show success message
+      setSuccessMessage("Sign up Successful! Welcome to our platform!");
+      setShowSuccessMessage(true);
+      
+      // Reset form after success
+      setTimeout(() => {
+        setShowSuccessMessage(false);
+        setEmail("");
+        setPassword("");
+        setName("");
+        
+        // Navigate to homepage after successful signup
+        router.push("/");
+      }, 2000);
+      
     } catch (error) {
-      setError(error?.response?.data || "signup failed. Try again.");
-      console.log(error?.response?.data || "signup failed. Try again.")
+      // Handle error appropriately
+      setErrorMessage(error?.response?.data || "Signup failed. This email may already be registered.");
+      console.log(error?.response?.data || "Signup failed. Try again.");
+      setShowSuccessMessage(false); // Ensure success message is not shown
     } finally {
       setLoading(false); // Hide loader
     }
-
-    // Show success message
-    setSuccessMessage("Sign up Successful! Welcome back!");
-    setShowSuccessMessage(true);
-
-    // Reset form after success (simulating successful login)
-    setTimeout(() => {
-      setShowSuccessMessage(false);
-      setEmail("");
-      setPassword("");
-    }, 2000);
-
   };
 
   // Handle form submission based on current view

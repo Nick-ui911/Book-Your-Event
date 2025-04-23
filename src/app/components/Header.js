@@ -10,20 +10,34 @@ import {
   LogOut,
   Ticket,
   LayoutDashboard,
+  UserIcon,
 } from "lucide-react";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
+import { removeUser } from "@/redux/userSlice";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+import { BASE_URL } from "@/constants/apiUrl";
 
 export default function Header() {
   const user = useSelector((store) => store.user);
+  const events = useSelector((store) => store.events);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const profileRef = useRef(null);
   const searchRef = useRef(null);
+  const dispatch = useDispatch();
+  const router = useRouter();
 
-  const handleLogout = () => {
-    // Your logout logic here, like clearing tokens, Redux state, etc.
+  const handleLogout = async () => {
+    try {
+      await axios.post(BASE_URL + "/logout", {}, { withCredentials: true });
+      dispatch(removeUser());
+      router.push("/");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   // Close dropdown when clicking outside
@@ -141,7 +155,7 @@ export default function Header() {
                   <div className="h-9 w-9 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 p-0.5">
                     <img
                       className="h-8 w-8 rounded-full border-2 border-white"
-                      src={null}
+                      src={user.photoUrl || <UserIcon className="w-12 h-12 text-black" />}
                       alt="User profile"
                     />
                   </div>
@@ -152,10 +166,10 @@ export default function Header() {
                   <div className="origin-top-right absolute right-0 mt-2 w-52 rounded-lg shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 z-50 overflow-hidden">
                     <div className="px-4 py-3 border-b border-gray-100">
                       <p className="text-sm font-medium text-gray-900">
-                        Alex Johnson
+                        {user.name || ""}
                       </p>
                       <p className="text-xs text-gray-500 truncate">
-                        alex.johnson@example.com
+                        {user.email || ""}
                       </p>
                     </div>
                     <Link

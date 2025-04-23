@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { Provider } from "react-redux"; // Import Provider
 import { store } from "@/redux/store"; // Ensure you import the correct path to your store
+import UserInitializer from "./components/userIntialize";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,8 +31,7 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Provider store={store}>
-          {" "}
-          {/* Wrap with Provider */}
+          <UserInitializer />
           <Header />
           {children}
           <Footer />

@@ -35,6 +35,9 @@ const userSchema = new mongoose.Schema(
         }
       },
     },
+    mobileNo:{
+      type:String,
+    },
     photoUrl: {
       type: String,
     },
