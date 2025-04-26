@@ -26,4 +26,7 @@ const eventCardSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('EventCard', eventCardSchema);
+
+const EventCard = mongoose.models.EventCard || mongoose.model('EventCard', eventCardSchema);
+
+module.exports = EventCard;

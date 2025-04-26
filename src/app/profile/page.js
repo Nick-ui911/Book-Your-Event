@@ -61,8 +61,7 @@ export default function ProfilePage() {
 
   // Auth check
   if (!userdata) {
-    router.push("/login");
-    return null;
+    return <Spinner/>;
   }
 
   const formattedDate = user?.createdAt

@@ -16,7 +16,7 @@ const eventSchema = new mongoose.Schema({
     type: String, // Like "5:00 PM"
     required: true
   },
-  eventPhotoUrl:{
+  image:{
     type:String,
     
   },

@@ -1,5 +1,4 @@
 export const dynamic = "force-dynamic"; // ⬅️ ADD THIS!
-
 import dotenv from "dotenv"; // ⬅️ ADD this
 dotenv.config(); // ⬅️ AND this
 import { connectDB } from "@/config/database";
@@ -44,6 +43,7 @@ export async function POST(req) {
       name: "token",
       value: token,
       httpOnly: true,
+      maxAge: 7 * 24 * 60 * 60, // 7 days
       secure: process.env.NODE_ENV === "production" ? true : false,
       path: "/",
     });

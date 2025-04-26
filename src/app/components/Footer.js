@@ -31,19 +31,22 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="w-full bg-gradient-to-r from-blue-900 to-purple-900 text-white">
+    <footer
+      className="w-full bg-gradient-to-r from-[#1f1c2c] to-[#928dab]
+ text-white"
+    >
       {/* Main Footer Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Column 1: About */}
           <div className="space-y-4">
             <div className="flex items-center space-x-2">
-              <span className="w-8 h-8 rounded-md bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold">
+              <span className="w-8 h-8 rounded-md bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-black font-bold">
                 E
               </span>
               <h3 className="text-xl font-bold">EVENZA</h3>
             </div>
-            <p className="text-gray-300 text-sm">
+            <p className="text-black text-sm">
               Discover and join amazing events in your city. From concerts to
               workshops, conferences to meetups - find your next experience with
               Evenza.
@@ -51,25 +54,25 @@ export default function Footer() {
             <div className="flex space-x-4 pt-2">
               <a
                 href="#"
-                className="text-gray-300 hover:text-white transition-colors duration-200"
+                className="text-black hover:text-white transition-colors duration-200"
               >
                 <Facebook size={20} />
               </a>
               <a
                 href="#"
-                className="text-gray-300 hover:text-white transition-colors duration-200"
+                className="text-black hover:text-white transition-colors duration-200"
               >
                 <Twitter size={20} />
               </a>
               <a
-                href="#"
-                className="text-gray-300 hover:text-white transition-colors duration-200"
+                href="https://www.instagram.com/nikhilsinghbaghel8/"
+                className="text-black hover:text-white transition-colors duration-200"
               >
                 <Instagram size={20} />
               </a>
               <a
-                href="#"
-                className="text-gray-300 hover:text-white transition-colors duration-200"
+                href="https://www.linkedin.com/in/nikhil-singh-318515308/"
+                className="text-black hover:text-white transition-colors duration-200"
               >
                 <Linkedin size={20} />
               </a>
@@ -85,7 +88,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/events"
-                  className="text-gray-300 hover:text-white flex items-center transition-all duration-200 hover:translate-x-1"
+                  className="text-black hover:text-white flex items-center transition-all duration-200 hover:translate-x-1"
                 >
                   <Calendar className="h-4 w-4 mr-2" />
                   <span>Browse Events</span>
@@ -93,8 +96,8 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/create-event"
-                  className="text-gray-300 hover:text-white flex items-center transition-all duration-200 hover:translate-x-1"
+                  href="/postevent"
+                  className="text-black hover:text-white flex items-center transition-all duration-200 hover:translate-x-1"
                 >
                   <Calendar className="h-4 w-4 mr-2" />
                   <span>Create Event</span>
@@ -103,7 +106,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/venues"
-                  className="text-gray-300 hover:text-white flex items-center transition-all duration-200 hover:translate-x-1"
+                  className="text-black hover:text-white flex items-center transition-all duration-200 hover:translate-x-1"
                 >
                   <MapPin className="h-4 w-4 mr-2" />
                   <span>Venues</span>
@@ -112,7 +115,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/blog"
-                  className="text-gray-300 hover:text-white flex items-center transition-all duration-200 hover:translate-x-1"
+                  className="text-black hover:text-white flex items-center transition-all duration-200 hover:translate-x-1"
                 >
                   <MessageSquare className="h-4 w-4 mr-2" />
                   <span>Blog</span>
@@ -121,7 +124,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/faq"
-                  className="text-gray-300 hover:text-white flex items-center transition-all duration-200 hover:translate-x-1"
+                  className="text-black hover:text-white flex items-center transition-all duration-200 hover:translate-x-1"
                 >
                   <MessageSquare className="h-4 w-4 mr-2" />
                   <span>FAQ</span>
@@ -129,7 +132,6 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-
           {/* Column 3: Contact Info */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold border-b border-blue-700 pb-2">
@@ -138,26 +140,36 @@ export default function Footer() {
             <ul className="space-y-3">
               <li className="flex items-start">
                 <MapPin className="h-5 w-5 mr-2 text-blue-400 flex-shrink-0" />
-                <span className="text-gray-300">
+                <span className="text-black">
                   123 Event Street, San Francisco, CA 94107
                 </span>
               </li>
               <li className="flex items-center">
                 <Phone className="h-5 w-5 mr-2 text-blue-400 flex-shrink-0" />
                 <a
-                  href="tel:+14155550123"
-                  className="text-gray-300 hover:text-white transition-colors duration-200"
+                  href="tel:+919755716505"
+                  className="text-black hover:text-white transition-colors duration-200"
                 >
-                  (415) 555-0123
+                  (+91)9755716505
                 </a>
               </li>
               <li className="flex items-center">
                 <Mail className="h-5 w-5 mr-2 text-blue-400 flex-shrink-0" />
                 <a
-                  href="mailto:hello@evenza.com"
-                  className="text-gray-300 hover:text-white transition-colors duration-200"
+                  href="mailto:nbaghel392@gmail.com"
+                  className="text-black hover:text-white transition-colors duration-200"
                 >
-                  hello@evenza.com
+                  nbaghel392@gmail.com
+                </a>
+              </li>
+              {/* New Link to Contact Page */}
+              <li className="flex items-center">
+                <a
+                  href="/contact"
+                  className="text-black hover:text-white transition-colors duration-200 flex items-center"
+                >
+                  <Mail className="h-5 w-5 mr-2 text-blue-400 flex-shrink-0" />
+                  Contact Page
                 </a>
               </li>
             </ul>
@@ -168,7 +180,7 @@ export default function Footer() {
             <h3 className="text-lg font-semibold border-b border-blue-700 pb-2">
               Newsletter
             </h3>
-            <p className="text-gray-300 text-sm">
+            <p className="text-black text-sm">
               Subscribe to our newsletter for updates on upcoming events and
               special offers.
             </p>
@@ -183,7 +195,7 @@ export default function Footer() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Your email address"
-                  className="px-4 py-2 w-full rounded-l-md text-gray-900 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="px-4 py-2 w-full rounded-l-md text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                   required
                 />
                 <button
@@ -193,7 +205,7 @@ export default function Footer() {
                   <ArrowRight className="h-5 w-5" />
                 </button>
               </div>
-              <p className="text-xs text-gray-400">
+              <p className="text-xs text-black">
                 We respect your privacy. Unsubscribe at any time.
               </p>
             </form>

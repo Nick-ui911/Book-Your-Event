@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {
   ChevronRight,
@@ -17,6 +17,8 @@ import {
 import { BASE_URL } from "@/constants/apiUrl";
 import { addUser } from "@/redux/userSlice";
 import { useDispatch } from "react-redux";
+import { signInWithPopup } from "firebase/auth";
+import { auth, provider } from "@/lib/firebase";
 
 export default function AuthComponent() {
   const [isLoginView, setIsLoginView] = useState(true);
@@ -30,7 +32,6 @@ export default function AuthComponent() {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const router = useRouter();
- 
 
   const handleViewToggle = () => {
     setIsLoginView(!isLoginView);
@@ -57,28 +58,30 @@ export default function AuthComponent() {
         { email, password },
         { withCredentials: true }
       );
-      
+
       // Only dispatch user and show success if we get here (no error was thrown)
       dispatch(addUser(res.data?.data));
       // console.log("user -"+res.data?.data)
-      
+
       // Show success message
       setSuccessMessage("Login Successful! Welcome back!");
       setShowSuccessMessage(true);
-      
+
       // Reset form after success
       setTimeout(() => {
         setShowSuccessMessage(false);
         setEmail("");
         setPassword("");
-        
+
         // Navigate to homepage after successful login
         router.push("/");
       }, 2000);
-      
     } catch (error) {
       // Handle error appropriately
-      setErrorMessage(error?.response?.data?.message || "Login failed. Please check your credentials and try again.");
+      setErrorMessage(
+        error?.response?.data?.message ||
+          "Login failed. Please check your credentials and try again."
+      );
       console.log(error?.response?.data?.message || "Login failed. Try again.");
       setShowSuccessMessage(false); // Ensure success message is not shown
     } finally {
@@ -87,7 +90,7 @@ export default function AuthComponent() {
   };
 
   // Standard Signup Function
-  const handleSignup = async(e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
     setErrorMessage(""); // Reset error before request
     setLoading(true); // Show loader
@@ -98,35 +101,37 @@ export default function AuthComponent() {
       setLoading(false); // Hide loader
       return;
     }
-    
+
     try {
       const res = await axios.post(
         BASE_URL + "/signup",
-        {name, email, password },
+        { name, email, password },
         { withCredentials: true }
       );
-      
+
       // Only dispatch user and show success if we get here (no error was thrown)
-      dispatch(addUser(res.data));
-      
+      dispatch(addUser(res.data?.data));
+
       // Show success message
       setSuccessMessage("Sign up Successful! Welcome to our platform!");
       setShowSuccessMessage(true);
-      
+
       // Reset form after success
       setTimeout(() => {
         setShowSuccessMessage(false);
         setEmail("");
         setPassword("");
         setName("");
-        
+
         // Navigate to homepage after successful signup
         router.push("/");
       }, 2000);
-      
     } catch (error) {
       // Handle error appropriately
-      setErrorMessage(error?.response?.data || "Signup failed. This email may already be registered.");
+      setErrorMessage(
+        error?.response?.data ||
+          "Signup failed. This email may already be registered."
+      );
       console.log(error?.response?.data || "Signup failed. Try again.");
       setShowSuccessMessage(false); // Ensure success message is not shown
     } finally {
@@ -144,24 +149,55 @@ export default function AuthComponent() {
   };
 
   // Google Login Function
-  const handleGoogleLogin = () => {
+  const handleGoogleLogin = async () => {
     setLoading(true); // Show loader
-    // Here you would implement Google login using NextAuth.js or Firebase Auth, etc.
-    console.log("Google login initiated");
+    const result = await signInWithPopup(auth, provider);
+    const idToken = await result.user.getIdToken();
+    const { email, displayName: name, photoURL: photo } = result.user;
+
+    const res = await axios.post(
+      BASE_URL + "/google-login",
+      {
+        idToken,
+        email,
+      },
+      {
+        withCredentials: true,
+      }
+    );
+
+    dispatch(addUser(res?.data));
 
     // Show success message
     setSuccessMessage("Google Login Successful!");
     setShowSuccessMessage(true);
 
-    setTimeout(() => setShowSuccessMessage(false), 2000);
+    // Reset form after success
+    setTimeout(() => {
+      setShowSuccessMessage(false);
+      setLoading(false); // Hide loader
+
+      // Navigate to homepage after successful signup
+      router.push("/");
+    }, 2000);
     setLoading(false); // Hide loader
   };
 
   // Google Signup Function
-  const handleGoogleSignup = () => {
+  const handleGoogleSignup = async () => {
     setLoading(true); // Show loader
-    // Here you would implement Google signup
-    console.log("Google signup initiated");
+    const result = await signInWithPopup(auth, provider);
+    const idToken = await result.user.getIdToken();
+    const user = result.user;
+    const { displayName, email, photoURL } = user;
+
+    const response = await axios.post(
+      BASE_URL + "/google-signup",
+      { name: displayName, email, PhotoUrl: photoURL, idToken },
+      { withCredentials: true }
+    );
+
+    dispatch(addUser(response.data.data));
 
     // Show success message
     setSuccessMessage(
@@ -169,7 +205,15 @@ export default function AuthComponent() {
     );
     setShowSuccessMessage(true);
 
-    setTimeout(() => setShowSuccessMessage(false), 2000);
+    // Reset form after success
+    setTimeout(() => {
+      setShowSuccessMessage(false);
+      setLoading(false); // Hide loader
+
+      // Navigate to homepage after successful signup
+      router.push("/");
+    }, 2000);
+
     setLoading(false); // Hide loader
   };
 

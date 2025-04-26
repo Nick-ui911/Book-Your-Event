@@ -5,7 +5,7 @@ import { connectDB } from "@/config/database";
 export async function POST(req) {
   try {
     await connectDB();
-    const { title, description, date, time, eventPhotoUrl, location, address, eventFee } =
+    const { title, description, date, time, image, location, address, eventFee } =
       await req.json();
 
     // Validate required fields
@@ -28,7 +28,7 @@ export async function POST(req) {
       description,
       date,
       time,
-      eventPhotoUrl,
+      image,
       location,
       address,
       eventFee: eventFee || 0,

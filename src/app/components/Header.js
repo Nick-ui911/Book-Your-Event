@@ -73,19 +73,6 @@ export default function Header() {
             </Link>
           </div>
 
-          {/* Mobile menu button */}
-          <div className="md:hidden flex items-center">
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-black p-2 rounded-md hover:bg-blue-200 transition-colors duration-200"
-            >
-              {isMenuOpen ? (
-                <X className="h-6 w-6" />
-              ) : (
-                <Menu className="h-6 w-6" />
-              )}
-            </button>
-          </div>
 
           {/* Center Section with Navigation - Hidden on Mobile */}
           <div className="hidden md:flex md:items-center md:justify-center space-x-1">
@@ -112,35 +99,6 @@ export default function Header() {
             </Link>
           </div>
 
-          {/* Search Bar - Right Side */}
-          <div
-            className="hidden md:flex md:items-center md:justify-end lg:w-1/3"
-            ref={searchRef}
-          >
-            <div className="relative w-full max-w-md">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Search
-                  className={`h-5 w-5 ${
-                    isSearchFocused ? "text-blue-600" : "text-gray-500"
-                  }`}
-                />
-              </div>
-              <input
-                id="search"
-                name="search"
-                className={`block w-full pl-10 pr-3 py-2 border ${
-                  isSearchFocused
-                    ? "border-blue-500 ring-2 ring-blue-300"
-                    : "border-gray-300"
-                } rounded-full leading-5 bg-white text-black placeholder-gray-500 focus:outline-none transition-all duration-200 sm:text-sm`}
-                placeholder="Search events in your city..."
-                type="search"
-                onFocus={() => setIsSearchFocused(true)}
-                onBlur={() => setIsSearchFocused(false)}
-              />
-            </div>
-          </div>
-
           {/* Right side items */}
           <div className="flex items-center space-x-4">
             {/* Profile Circle */}
@@ -155,7 +113,11 @@ export default function Header() {
                   <div className="h-9 w-9 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 p-0.5">
                     <img
                       className="h-8 w-8 rounded-full border-2 border-white"
-                      src={user.photoUrl || <UserIcon className="w-12 h-12 text-black" />}
+                      src={
+                        user.photoUrl || (
+                          <UserIcon className="w-12 h-12 text-black" />
+                        )
+                      }
                       alt="User profile"
                     />
                   </div>
@@ -208,82 +170,31 @@ export default function Header() {
               // 👉 Show Login button if user is null
               <Link
                 href="/login"
-                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-md hover:shadow-lg hover:scale-105 transform transition-all duration-200 ease-in-out text-sm font-semibold"
+                className="group relative px-6 py-3 rounded-xl overflow-hidden bg-gradient-to-r from-blue-600 to-indigo-700 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-300"
               >
-                Login
+                <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-indigo-600 to-blue-700 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-in-out"></span>
+                <span className="relative flex items-center justify-center gap-2">
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
+                    ></path>
+                  </svg>
+                  Login
+                </span>
               </Link>
             )}
           </div>
         </div>
       </div>
-
-      {/* Mobile menu */}
-      {isMenuOpen && (
-        <div className="md:hidden bg-white shadow-lg rounded-b-lg overflow-hidden">
-          <div className="pt-2 pb-4 space-y-1">
-            {/* Mobile Search */}
-            <div className="px-4 py-2">
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Search className="h-5 w-5 text-gray-500" />
-                </div>
-                <input
-                  id="mobile-search"
-                  name="search"
-                  className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-full text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="Search events..."
-                  type="search"
-                />
-              </div>
-            </div>
-
-            <Link
-              href="/dashboard"
-              className="block px-4 py-2 text-base font-medium text-gray-800 hover:bg-blue-50 hover:text-blue-600"
-            >
-              Dashboard
-            </Link>
-            <Link
-              href="/events"
-              className="flex px-4 py-2 text-base font-medium text-gray-800 hover:bg-blue-50 hover:text-blue-600 items-center"
-            >
-              <CalendarDays className="mr-2 h-5 w-5 text-gray-500" />
-              Events
-            </Link>
-            <Link
-              href="/features"
-              className="block px-4 py-2 text-base font-medium text-gray-800 hover:bg-blue-50 hover:text-blue-600"
-            >
-              Features
-            </Link>
-            <Link
-              href="/pricing"
-              className="block px-4 py-2 text-base font-medium text-gray-800 hover:bg-blue-50 hover:text-blue-600"
-            >
-              Pricing
-            </Link>
-            <Link
-              href="/about"
-              className="block px-4 py-2 text-base font-medium text-gray-800 hover:bg-blue-50 hover:text-blue-600"
-            >
-              About
-            </Link>
-            <div className="border-t border-gray-200 my-2"></div>
-            <Link
-              href="/profile"
-              className="block px-4 py-2 text-base font-medium text-gray-800 hover:bg-blue-50 hover:text-blue-600"
-            >
-              Your Profile
-            </Link>
-            <Link
-              href="/settings"
-              className="block px-4 py-2 text-base font-medium text-gray-800 hover:bg-blue-50 hover:text-blue-600"
-            >
-              Settings
-            </Link>
-          </div>
-        </div>
-      )}
     </header>
   );
 }

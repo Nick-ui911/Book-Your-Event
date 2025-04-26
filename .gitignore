@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+
+
+bookevent-d1d71-firebase-adminsdk-fbsvc-4ae212bfb3.json

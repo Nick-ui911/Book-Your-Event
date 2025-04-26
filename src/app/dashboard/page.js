@@ -17,6 +17,7 @@ import { useEffect } from "react";
 import { setMyEvents } from "@/redux/myeventSlice";
 import axios from "axios";
 import { BASE_URL } from "@/constants/apiUrl";
+import Spinner from "../components/spinner";
 
 export default function DashboardPage() {
   const user = useSelector((store) => store.user);
@@ -39,7 +40,6 @@ export default function DashboardPage() {
   };
 
   useEffect(() => {
-    if (user === null) return; // waiting for user state to resolve
     if (!user) {
       router.push("/login");
     } else {
@@ -114,6 +114,11 @@ export default function DashboardPage() {
       desc: "Event 'Indie Music Fest' went live",
     },
   ];
+
+  // Auth check
+  if (!user) {
+    return <Spinner/>;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">

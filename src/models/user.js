@@ -57,6 +57,7 @@ const userSchema = new mongoose.Schema(
         },
         paymentMethod: {
           type: String,
+          default:"Credit Card"
         },
       },
     ],
@@ -75,7 +76,7 @@ const userSchema = new mongoose.Schema(
 userSchema.methods.getJWT = async function () {
   const user = this;
   const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET, {
-    expiresIn: "1d",
+    expiresIn: "7d",
   });
   return token;
 };
