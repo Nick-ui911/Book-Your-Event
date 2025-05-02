@@ -55,6 +55,10 @@ const userSchema = new mongoose.Schema(
           type: Number,
           required: true,
         },
+        eventName:{
+          type: String,
+          required: true,
+        },
         paymentMethod: {
           type: String,
           default:"Credit Card"

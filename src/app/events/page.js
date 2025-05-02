@@ -58,6 +58,7 @@ export default function Page() {
       const isUpcoming = eventDateStr >= todayStr;
 
       // Filter by title if search term exists
+      // If no search term is entered → titleMatch is true (accept everything).
       const titleMatch =
         !searchTerm ||
         e.title?.toLowerCase().includes(searchTerm.toLowerCase());

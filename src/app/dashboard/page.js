@@ -10,6 +10,7 @@ import {
   Globe,
   MailOpen,
   Clock,
+  Wallet,
 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
@@ -18,10 +19,12 @@ import { setMyEvents } from "@/redux/myeventSlice";
 import axios from "axios";
 import { BASE_URL } from "@/constants/apiUrl";
 import Spinner from "../components/spinner";
+import { setCards } from "@/redux/mycardSlice";
 
 export default function DashboardPage() {
   const user = useSelector((store) => store.user);
   const myEvents = useSelector((store) => store.myEvents);
+  const ticket = useSelector((store) => store.card); // Make sure this matches your slice
   const router = useRouter();
   const dispatch = useDispatch();
 
@@ -38,14 +41,28 @@ export default function DashboardPage() {
       setError("Something went wrong while loading your events.");
     }
   };
+  const fetchMyTickets = async () => {
+    try {
+      const res = await axios.get(`${BASE_URL}/getCards`, {
+        withCredentials: true,
+      });
+      const events = res?.data?.eventCards || [];
+      dispatch(setCards(events));
+      // console.log(events);
+    } catch (error) {
+      console.error("Failed to fetch my events:", err);
+      // Handle unauthorized errors by redirecting to login
+      if (error.response && error.response.status === 401) {
+        router.push("/login");
+        return;
+      }
+    }
+  };
 
   useEffect(() => {
-    if (!user) {
-      router.push("/login");
-    } else {
-      fetchMyEvents();
-    }
-  }, [user]);
+    fetchMyEvents();
+    fetchMyTickets();
+  }, []);
   // 🔢 Filter Events
   const totalMyEvents = myEvents?.length || 0;
   const today = new Date();
@@ -79,7 +96,7 @@ export default function DashboardPage() {
 
   const stats = [
     { label: "Total Events", value: totalMyEvents },
-    { label: "Tickets Bought", value: 8 }, // 🔧 Make dynamic later
+    { label: "Tickets Bought", value: ticket.length }, // 🔧 Make dynamic later
     { label: "Active Events", value: activeMyEvents.length },
     { label: "Upcoming Tickets", value: 2 }, // 🔧 Make dynamic later
   ];
@@ -100,24 +117,9 @@ export default function DashboardPage() {
             : "Completed",
       })) || [];
 
-  const activity = [
-    {
-      icon: <PlusCircle className="w-4 h-4 text-purple-500" />,
-      desc: "You created 'Tech Talks 2025'",
-    },
-    {
-      icon: <TicketCheck className="w-4 h-4 text-green-500" />,
-      desc: "You bought a ticket to 'Open Mic Night'",
-    },
-    {
-      icon: <CalendarDays className="w-4 h-4 text-blue-500" />,
-      desc: "Event 'Indie Music Fest' went live",
-    },
-  ];
-
   // Auth check
   if (!user) {
-    return <Spinner/>;
+    return <Spinner />;
   }
 
   return (
@@ -164,51 +166,72 @@ export default function DashboardPage() {
       </section>
 
       {/* Recent Events + Activity */}
-      <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <section className="flex flex-col lg:flex-row gap-6">
         {/* Recent Events */}
-        <div className="bg-white rounded-xl shadow-md p-5 col-span-2">
+        <div className="bg-white rounded-xl shadow-md p-5 w-full lg:w-1/2">
           <h3 className="text-lg font-semibold mb-4 text-gray-700">
             Recent Events
           </h3>
-          <ul className="divide-y">
-            {recentEvents.map((event, idx) => (
-              <li key={idx} className="py-3 flex justify-between items-center">
-                <div>
-                  <p className="font-medium text-gray-800">{event.name}</p>
-                  <p className="text-sm text-gray-500">{event.date}</p>
-                </div>
-                <span
-                  className={`px-3 py-1 rounded-full text-sm font-medium ${
-                    event.status === "Live"
-                      ? "bg-green-100 text-green-700"
-                      : event.status === "Upcoming"
-                      ? "bg-yellow-100 text-yellow-700"
-                      : "bg-gray-200 text-gray-600"
-                  }`}
+          {recentEvents.length === 0 ? (
+            <p className="text-gray-500">No recent events available.</p>
+          ) : (
+            <ul className="divide-y">
+              {recentEvents.map((event, idx) => (
+                <li
+                  key={idx}
+                  className="py-3 flex justify-between items-center"
                 >
-                  {event.status}
-                </span>
-              </li>
-            ))}
-          </ul>
+                  <div>
+                    <p className="font-medium text-gray-800">{event.name}</p>
+                    <p className="text-sm text-gray-500">{event.date}</p>
+                  </div>
+                  <span
+                    className={`px-3 py-1 rounded-full text-sm font-medium ${
+                      event.status === "Live"
+                        ? "bg-green-100 text-green-700"
+                        : event.status === "Upcoming"
+                        ? "bg-yellow-100 text-yellow-700"
+                        : "bg-gray-200 text-gray-600"
+                    }`}
+                  >
+                    {event.status}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
 
-        {/* Recent Activity */}
-        <div className="bg-white rounded-xl shadow-md p-5">
+        {/* Recent Payments */}
+        <div className="bg-white rounded-xl shadow-md p-5 w-full lg:w-1/2">
           <h3 className="text-lg font-semibold mb-4 text-gray-700">
-            Recent Activity
+            Recent Payments
           </h3>
-          <ul className="space-y-4">
-            {activity.map((item, idx) => (
-              <li
-                key={idx}
-                className="flex items-center gap-3 text-sm text-gray-600"
-              >
-                <div className="bg-gray-100 p-2 rounded-full">{item.icon}</div>
-                <span>{item.desc}</span>
-              </li>
-            ))}
-          </ul>
+          {user?.payments?.length > 0 ? (
+            <ul className="divide-y">
+              {user.payments.slice(0, 3).map((payment, idx) => (
+                <li
+                  key={idx}
+                  className="py-3 flex justify-between items-center"
+                >
+                  <div>
+                    <p className="font-medium text-gray-800">
+                      {payment.eventName || "Unknown Event"}
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      ₹{payment.amount} •{" "}
+                      {new Date(payment.date).toLocaleDateString()}
+                    </p>
+                  </div>
+                  <span className="px-3 py-1 rounded-full bg-green-100 text-green-700 text-sm font-medium">
+                    Paid
+                  </span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-gray-500">You haven't made any payments yet.</p>
+          )}
         </div>
       </section>
 
@@ -216,7 +239,7 @@ export default function DashboardPage() {
       <section className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-4">
         <Link href="/explore">
           <div className="bg-white p-5 rounded-xl shadow hover:shadow-md transition cursor-pointer flex items-center gap-4">
-            <Globe className="text-blue-600 w-6 h-6" />
+            <Globe className="text-purple-600 w-6 h-6" />
             <div>
               <h4 className="font-semibold text-gray-700">Explore Events</h4>
               <p className="text-sm text-gray-500">
@@ -226,7 +249,7 @@ export default function DashboardPage() {
           </div>
         </Link>
 
-        <Link href="/create-event">
+        <Link href="/postevent">
           <div className="bg-white p-5 rounded-xl shadow hover:shadow-md transition cursor-pointer flex items-center gap-4">
             <PlusCircle className="text-purple-600 w-6 h-6" />
             <div>
@@ -238,14 +261,12 @@ export default function DashboardPage() {
           </div>
         </Link>
 
-        <Link href="/dashboard/tickets">
+        <Link href="/wallet">
           <div className="bg-white p-5 rounded-xl shadow hover:shadow-md transition cursor-pointer flex items-center gap-4">
-            <TicketCheck className="text-green-600 w-6 h-6" />
+            <Wallet className="text-purple-600 w-5 h-5" />
             <div>
               <h4 className="font-semibold text-gray-700">My Tickets</h4>
-              <p className="text-sm text-gray-500">
-                Check tickets you’ve purchased.
-              </p>
+              <p className="text-sm text-gray-500">Check your Wallet</p>
             </div>
           </div>
         </Link>

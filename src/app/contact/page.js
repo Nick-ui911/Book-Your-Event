@@ -79,7 +79,7 @@ const ContactPage = () => {
 
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-4 py-12 bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+    <div className="min-h-screen text-black flex flex-col items-center justify-center px-4 py-12 bg-gradient-to-br from-blue-50 via-white to-indigo-50">
       {/* Decorative elements */}
       <div className="absolute top-20 left-10 w-20 h-20 bg-blue-100 rounded-full opacity-70 blur-xl" />
       <div className="absolute bottom-20 right-10 w-32 h-32 bg-indigo-100 rounded-full opacity-70 blur-xl" />

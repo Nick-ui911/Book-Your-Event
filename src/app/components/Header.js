@@ -11,6 +11,7 @@ import {
   Ticket,
   LayoutDashboard,
   UserIcon,
+  Wallet,
 } from "lucide-react";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
@@ -154,6 +155,13 @@ export default function Header() {
                     >
                       <Ticket className="w-5 h-5" />
                       My Tickets
+                    </Link>
+                    <Link
+                      href="/wallet"
+                      className="flex items-center gap-2 px-3 py-2 rounded-md text-black  hover:bg-gray-100"
+                    >
+                      <Wallet  className="w-5 h-5" />
+                      My Wallet
                     </Link>
                     <div className="border-t border-gray-100"></div>
                     <button
