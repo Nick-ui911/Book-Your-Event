@@ -62,7 +62,7 @@ export default function DashboardPage() {
   useEffect(() => {
     fetchMyEvents();
     fetchMyTickets();
-  }, [fetchMyEvents, fetchMyTickets]);
+  }, []);
   // 🔢 Filter Events
   const totalMyEvents = myEvents?.length || 0;
   const today = new Date();
@@ -230,9 +230,8 @@ export default function DashboardPage() {
               ))}
             </ul>
           ) : (
-            <p className="text-gray-500">
-              You haven&apos;t made any payments yet.
-            </p>
+           <p className="text-gray-500">You haven&apos;t made any payments yet.</p>
+
           )}
         </div>
       </section>

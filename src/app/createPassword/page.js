@@ -12,6 +12,7 @@ import {
   Key,
   Shield,
 } from "lucide-react";
+import SmallSpinner from "../components/SmallSpinner";
 
 export default function CreatePassword() {
   const [password, setPassword] = useState("");
@@ -82,11 +83,6 @@ export default function CreatePassword() {
     }
   };
 
-  const SmallSpinner = () => (
-    <div className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-solid border-current border-r-transparent align-middle text-white">
-      <span className="sr-only">Loading...</span>
-    </div>
-  );
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-300 to-purple-300  py-12 px-4 ">
