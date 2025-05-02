@@ -195,11 +195,13 @@ const EventDetailsPage = () => {
                 className="bg-gray-100"
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center bg-gradient-to-r from-indigo-800 via-purple-800 to-pink-800">
-                <img
+              <div className="w-full h-full flex items-center justify-center">
+                <Image
                   src="/dummyEvent.png"
                   alt="Event"
-                  className="w-32 h-32 object-contain opacity-80"
+                  width={80}
+                  height={80}
+                  className="opacity-70 object-contain"
                 />
               </div>
             )}

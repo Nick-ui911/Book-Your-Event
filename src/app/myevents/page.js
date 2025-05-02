@@ -9,23 +9,22 @@ import Link from "next/link";
 import Spinner from "../components/spinner";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const MyEventsPage = () => {
   const user = useSelector((store) => store.user);
   const myEvents = useSelector((store) => store.myEvents);
   const dispatch = useDispatch();
-   const router = useRouter();
+  const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-
 
   useEffect(() => {
     if (!user) {
       router.push("/login");
     }
   }, [user]);
-  
 
   const fetchMyEvents = async () => {
     try {
@@ -49,9 +48,9 @@ const MyEventsPage = () => {
     }
   }, [user]);
 
-   // Auth check
-   if (!user) {
-    return <Spinner/>;
+  // Auth check
+  if (!user) {
+    return <Spinner />;
   }
   return (
     <div className="min-h-screen px-6 py-8 max-w-6xl mx-auto bg-gradient-to-b from-white via-gray-50 to-gray-100">
@@ -77,17 +76,20 @@ const MyEventsPage = () => {
               <Link href={`/myevents/${event._id}`}>
                 <div className="h-48 w-full overflow-hidden relative">
                   {event.image ? (
-                    <img
+                    <Image
                       src={event.image}
                       alt={event.title}
-                      className="w-full h-full object-cover"
+                      fill
+                      className="object-cover"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-indigo-200 to-purple-300">
-                      <img
+                      <Image
                         src="/dummyEvent.png"
                         alt="Event"
-                        className="w-20 h-20 object-contain"
+                        width={80}
+                        height={80}
+                        className="object-contain"
                       />
                     </div>
                   )}
@@ -100,7 +102,10 @@ const MyEventsPage = () => {
                     {event.description}
                   </p>
                   <div className="text-sm text-gray-500">
-                    <p>📅 {new Date(event.date).toLocaleDateString()} at {event.time}</p>
+                    <p>
+                      📅 {new Date(event.date).toLocaleDateString()} at{" "}
+                      {event.time}
+                    </p>
                     <p>📍 {event.location}</p>
                   </div>
                 </div>

@@ -104,7 +104,7 @@ const ContactPage = () => {
         
         <form className="space-y-6 relative" onSubmit={handleSubmit}>
           <div className="transition-all duration-200 hover:translate-y-[-2px]">
-            <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+            <label className="text-sm font-medium text-gray-700 mb-1 flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
               </svg>
@@ -121,7 +121,7 @@ const ContactPage = () => {
           </div>
 
           <div className="transition-all duration-200 hover:translate-y-[-2px]">
-            <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+            <label className="text-sm font-medium text-gray-700 mb-1 flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
@@ -146,7 +146,7 @@ const ContactPage = () => {
           </div>
 
           <div className="transition-all duration-200 hover:translate-y-[-2px]">
-            <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center">
+            <label className="text-sm font-medium text-gray-700 mb-1 flex items-center">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
               </svg>

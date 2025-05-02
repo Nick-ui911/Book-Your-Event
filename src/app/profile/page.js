@@ -18,6 +18,7 @@ import {
   Key,
 } from "lucide-react";
 import Spinner from "../components/spinner";
+import Image from "next/image";
 
 export default function ProfilePage() {
   const [user, setUser] = useState(null);
@@ -49,8 +50,6 @@ export default function ProfilePage() {
     fetchProfile();
   }, [dispatch, router]);
 
-
-
   // Loading state
   if (loading)
     return (
@@ -61,7 +60,7 @@ export default function ProfilePage() {
 
   // Auth check
   if (!userdata) {
-    return <Spinner/>;
+    return <Spinner />;
   }
 
   const formattedDate = user?.createdAt
@@ -104,10 +103,12 @@ export default function ProfilePage() {
 
             <div className="inline-block rounded-full bg-white p-2 mb-4">
               {user?.photoUrl ? (
-                <img
+                <Image
                   src={user.photoUrl}
                   alt={user.name}
-                  className="w-24 h-24 rounded-full object-cover"
+                  width={96} // 24 * 4 (adjust based on the size you need)
+                  height={96} // 24 * 4 (adjust based on the size you need)
+                  className="rounded-full object-cover"
                 />
               ) : (
                 <div className="w-24 h-24 rounded-full bg-indigo-100 flex items-center justify-center">

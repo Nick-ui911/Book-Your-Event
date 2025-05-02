@@ -180,13 +180,15 @@ export default function Page() {
                         className="bg-gray-100"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center ">
-                        <img
-                          src="/dummyEvent.png"
-                          alt="Event"
-                          className="w-20 h-20 object-contain opacity-70"
-                        />
-                      </div>
+                      <div className="w-full h-full flex items-center justify-center">
+                      <Image
+                        src="/dummyEvent.png"
+                        alt="Event"
+                        width={80}
+                        height={80}
+                        className="opacity-70 object-contain"
+                      />
+                    </div>
                     )}
                   </div>
                   
@@ -289,7 +291,7 @@ export default function Page() {
                       <button
                         onClick={(evt) => {
                           evt.stopPropagation();
-                          router.push(`/book/${e._id}`);
+                          router.push(`/events/${e._id}`);
                         }}
                         className="w-full px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-colors shadow-md"
                       >

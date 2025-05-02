@@ -9,6 +9,7 @@ import { X, Edit, Upload, MapPin, Calendar, Clock } from "lucide-react";
 import { BASE_URL } from "@/constants/apiUrl";
 import Spinner from "@/app/components/spinner";
 import SmallSpinner from "@/app/components/SmallSpinner";
+import Image from "next/image";
 
 export default function HeavenlyEventEditPage() {
   const { eventId } = useParams();
@@ -132,28 +133,30 @@ export default function HeavenlyEventEditPage() {
     }
   };
 
-  if (loading) return (
-    <div className="flex items-center justify-center h-screen bg-gradient-to-b from-blue-50 to-indigo-100">
-      <Spinner />
-    </div>
-  );
-  
-  if (error && !saving) return (
-    <div className="flex items-center justify-center h-screen bg-gradient-to-b from-blue-50 to-indigo-100">
-      <div className="bg-white bg-opacity-80 shadow-xl rounded-2xl p-8 border border-red-200">
-        <p className="text-red-600 text-center font-medium">{error}</p>
+  if (loading)
+    return (
+      <div className="flex items-center justify-center h-screen bg-gradient-to-b from-blue-50 to-indigo-100">
+        <Spinner />
       </div>
-    </div>
-  );
+    );
+
+  if (error && !saving)
+    return (
+      <div className="flex items-center justify-center h-screen bg-gradient-to-b from-blue-50 to-indigo-100">
+        <div className="bg-white bg-opacity-80 shadow-xl rounded-2xl p-8 border border-red-200">
+          <p className="text-red-600 text-center font-medium">{error}</p>
+        </div>
+      </div>
+    );
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-blue-50 via-indigo-50 to-purple-50 py-12 px-4">
       <div className="max-w-2xl mx-auto">
         <div className="bg-white bg-opacity-80 backdrop-blur-sm shadow-2xl rounded-3xl p-8 border border-blue-100">
           <div className="flex justify-center mb-6">
-          <Edit className="text-blue-400 mr-2" size={32} />
+            <Edit className="text-blue-400 mr-2" size={32} />
             <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-               Edit Event
+              Edit Event
             </h1>
           </div>
 
@@ -191,7 +194,7 @@ export default function HeavenlyEventEditPage() {
             {/* Date & Time */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="group">
-                <label className="block text-sm font-medium text-indigo-700 mb-1 flex items-center transition-all group-hover:text-indigo-500">
+                <label className=" text-sm font-medium text-indigo-700 mb-1 flex items-center transition-all group-hover:text-indigo-500">
                   <Calendar size={16} className="mr-1" />
                   Date
                 </label>
@@ -204,7 +207,7 @@ export default function HeavenlyEventEditPage() {
                 />
               </div>
               <div className="group">
-                <label className="block text-sm font-medium text-indigo-700 mb-1 flex items-center transition-all group-hover:text-indigo-500">
+                <label className=" text-sm font-medium text-indigo-700 mb-1 flex items-center transition-all group-hover:text-indigo-500">
                   <Clock size={16} className="mr-1" />
                   Time
                 </label>
@@ -220,7 +223,7 @@ export default function HeavenlyEventEditPage() {
 
             {/* Location */}
             <div className="group">
-              <label className="block text-sm font-medium text-indigo-700 mb-1 flex items-center transition-all group-hover:text-indigo-500">
+              <label className=" text-sm font-medium text-indigo-700 mb-1 flex items-center transition-all group-hover:text-indigo-500">
                 <MapPin size={16} className="mr-1" />
                 Location
               </label>
@@ -239,11 +242,13 @@ export default function HeavenlyEventEditPage() {
               <label className="block text-sm font-medium text-indigo-700 mb-2 transition-all group-hover:text-indigo-500">
                 Event Image
               </label>
-              
+
               {!image && (
                 <div className="flex flex-col items-center justify-center border-2 border-dashed border-blue-300 rounded-xl p-6 bg-blue-50 bg-opacity-50 hover:bg-blue-100 transition-all">
                   <Upload className="text-blue-400 mb-2" size={32} />
-                  <p className="text-blue-500 mb-4 text-center">Upload an ethereal image for your event</p>
+                  <p className="text-blue-500 mb-4 text-center">
+                    Upload an ethereal image for your event
+                  </p>
                   <label className="cursor-pointer px-6 py-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-medium rounded-full hover:shadow-lg transition-all transform hover:-translate-y-1">
                     Select Image
                     <input
@@ -259,7 +264,9 @@ export default function HeavenlyEventEditPage() {
               {uploading && (
                 <div className="mt-4">
                   <p className="text-sm text-center text-indigo-600 mb-2">
-                    {uploadProgress < 100 ? "Ascending to the clouds..." : "Almost there..."}
+                    {uploadProgress < 100
+                      ? "Ascending to the clouds..."
+                      : "Almost there..."}
                   </p>
                   <div className="w-full bg-blue-100 rounded-full h-2">
                     <div
@@ -273,10 +280,12 @@ export default function HeavenlyEventEditPage() {
               {image && (
                 <div className="mt-4 flex justify-center">
                   <div className="relative inline-block">
-                    <img
+                    <Image
                       src={image}
                       alt="Uploaded"
-                      className="w-48 h-48 object-cover rounded-2xl shadow-lg border border-blue-200"
+                      width={192}
+                      height={192}
+                      className="object-cover rounded-2xl shadow-lg border border-blue-200"
                     />
                     <button
                       type="button"
@@ -307,11 +316,7 @@ export default function HeavenlyEventEditPage() {
                   saving ? "opacity-70 cursor-not-allowed" : ""
                 }`}
               >
-                {saving ? (
-                  <SmallSpinner />
-                ) : (
-                  <>Update</>
-                )}
+                {saving ? <SmallSpinner /> : <>Update</>}
               </button>
             </div>
           </form>

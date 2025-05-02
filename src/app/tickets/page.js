@@ -59,7 +59,7 @@ const Page = () => {
 
   useEffect(() => {
     fetchMyTickets();
-  }, []);
+  }, [router]);
 
   if (!user || isLoading) {
     return <Spinner />;

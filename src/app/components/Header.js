@@ -14,6 +14,7 @@ import {
   Wallet,
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { useSelector, useDispatch } from "react-redux";
 import { removeUser } from "@/redux/userSlice";
 import { useRouter } from "next/navigation";
@@ -74,7 +75,6 @@ export default function Header() {
             </Link>
           </div>
 
-
           {/* Center Section with Navigation - Hidden on Mobile */}
           <div className="hidden md:flex md:items-center md:justify-center space-x-1">
             <Link
@@ -112,15 +112,19 @@ export default function Header() {
                 >
                   <span className="sr-only">Open user menu</span>
                   <div className="h-9 w-9 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 p-0.5">
-                    <img
-                      className="h-8 w-8 rounded-full border-2 border-white"
-                      src={
-                        user.photoUrl || (
-                          <UserIcon className="w-12 h-12 text-black" />
-                        )
-                      }
-                      alt="User profile"
-                    />
+                    {user.photoUrl ? (
+                      <Image
+                        src={user.photoUrl}
+                        alt="User profile"
+                        width={32}
+                        height={32}
+                        className="h-8 w-8 rounded-full border-2 border-white object-cover"
+                      />
+                    ) : (
+                      <div className="h-8 w-8 rounded-full border-2 border-white bg-white flex items-center justify-center">
+                        <UserIcon className="w-5 h-5 text-black" />
+                      </div>
+                    )}
                   </div>
                 </button>
 
@@ -160,7 +164,7 @@ export default function Header() {
                       href="/wallet"
                       className="flex items-center gap-2 px-3 py-2 rounded-md text-black  hover:bg-gray-100"
                     >
-                      <Wallet  className="w-5 h-5" />
+                      <Wallet className="w-5 h-5" />
                       My Wallet
                     </Link>
                     <div className="border-t border-gray-100"></div>

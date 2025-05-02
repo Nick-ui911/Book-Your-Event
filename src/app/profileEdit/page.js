@@ -15,6 +15,7 @@ import {
   AlertCircle,
   ArrowLeft,
 } from "lucide-react";
+import Image from "next/image";
 
 const EditProfile = () => {
   const user = useSelector((store) => store.user);
@@ -201,10 +202,12 @@ const EditProfile = () => {
               <div className="mb-8 flex flex-col items-center">
                 <div className="mb-4 relative">
                   {photoUrl ? (
-                    <img
+                    <Image
                       src={photoUrl}
                       alt="Profile"
-                      className="w-32 h-32 rounded-full object-cover border-4 border-indigo-500 shadow-lg"
+                      width={128} // 32 * 4 (adjust based on the size you need)
+                      height={128} // 32 * 4 (adjust based on the size you need)
+                      className="rounded-full object-cover border-4 border-indigo-500 shadow-lg"
                     />
                   ) : (
                     <div className="w-32 h-32 rounded-full bg-indigo-900/50 flex items-center justify-center border-4 border-indigo-500 shadow-lg">
