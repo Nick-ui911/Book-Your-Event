@@ -260,7 +260,7 @@ export default function CreatePassword() {
             </div>
             {confirmPassword && !passwordMatch && (
               <p className="mt-1 text-xs text-red-600 dark:text-red-400">
-                Passwords don't match
+                Passwords don&apos;t match
               </p>
             )}
           </div>
