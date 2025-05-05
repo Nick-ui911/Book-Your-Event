@@ -343,7 +343,7 @@ export default function Home() {
                 </div>
 
                 <p className="text-gray-700 mb-8 text-lg leading-relaxed">
-                  "{testimonial.text}"
+                &quot;{testimonial.text}&quot;
                 </p>
 
                 <div className="flex items-center mt-auto">
