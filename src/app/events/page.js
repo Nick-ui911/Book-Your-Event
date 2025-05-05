@@ -313,7 +313,7 @@ export default function Page() {
                 No upcoming events found
               </h3>
               <p className="text-gray-600 mb-6">
-                We couldn't find any events matching your search criteria.
+                We couldn&apos;t find any events matching your search criteria.
               </p>
               <button
                 onClick={() => {

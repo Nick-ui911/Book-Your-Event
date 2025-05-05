@@ -365,7 +365,7 @@ const EventDetailsPage = () => {
               </button>
               <p className="text-gray-500 text-sm mt-3">
                 {filteredEvent.eventFee > 0
-                  ? "You'll be prompted to complete payment securely"
+                  ? "You&apos;ll be prompted to complete payment securely"
                   : "Confirm your attendance for this free event"}
               </p>
             </div>

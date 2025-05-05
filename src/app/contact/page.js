@@ -98,7 +98,7 @@ const ContactPage = () => {
             Get in Touch
           </h1>
           <p className="text-gray-600 max-w-md mx-auto">
-            We'd love to hear from you! Fill out the form below and our team will respond as soon as possible.
+            We&apos;d love to hear from you! Fill out the form below and our team will respond as soon as possible.
           </p>
         </div>
         

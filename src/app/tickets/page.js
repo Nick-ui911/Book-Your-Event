@@ -193,7 +193,7 @@ const Page = () => {
               No Tickets Found
             </h3>
             <p className="text-gray-600 text-lg mb-6">
-              You haven't purchased any event tickets yet.
+              You haven&apos;t purchased any event tickets yet.
             </p>
             <button className="inline-flex items-center justify-center bg-indigo-600 text-white font-medium px-6 py-3 rounded-xl hover:bg-indigo-700 transition-colors">
               <TrendingUp className="h-5 w-5 mr-2" />
