@@ -27,6 +27,12 @@ export default function UpdatePasswordForm() {
   const [passwordStrength, setPasswordStrength] = useState(0);
   const router = useRouter();
 
+  useEffect(() => {
+    // Only run this on the client-side after user is available
+    if (!user?.password) {
+      router.push("/createPassword");
+    }
+  }, [user, router]);
 
   // Check password strength
   useEffect(() => {
@@ -68,10 +74,6 @@ export default function UpdatePasswordForm() {
       setLoading(false);
     }
   };
-
-  if (!user.password) {
-    router.push("/createPassword");
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-blue-300 to-purple-300  py-12 px-4">
