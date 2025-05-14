@@ -10,6 +10,8 @@ if (!getApps().length) {
   });
 }
 
+// When you import this file (e.g. import { adminAuth } from "@/lib/firebaseAdmin";), the top-level code runs immediately.
+
 const adminAuth = getAuth();
 
 export { adminAuth };
