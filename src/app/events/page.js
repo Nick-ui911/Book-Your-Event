@@ -166,7 +166,7 @@ export default function Page() {
               <div
                 key={e._id}
                 className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 cursor-pointer border border-gray-100"
-                onClick={() => router.push(`/event/${e._id}`)}
+                onClick={() => router.push(`/events/${e._id}`)}
               >
                 <div className="flex flex-col md:flex-row">
                   {/* Event Image */}
