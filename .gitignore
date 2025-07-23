@@ -9,6 +9,9 @@
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
+/paymentCreate
+razorpay.js
+payment.js
 
 # testing
 /coverage
