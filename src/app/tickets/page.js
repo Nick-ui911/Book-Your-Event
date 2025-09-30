@@ -14,6 +14,7 @@ import {
   Ticket,
   TrendingUp,
   RefreshCw,
+  Download as DownloadIcon,
 } from "lucide-react";
 import Spinner from "../components/spinner";
 
@@ -61,6 +62,81 @@ const Page = () => {
     fetchMyTickets();
   }, [router]);
 
+  const isEventExpired = (eventDate, eventTime) => {
+    if (!eventDate) return false;
+    const eventDateObj = new Date(eventDate);
+    if (eventTime) {
+      const [hoursStr, minutesStr] = eventTime.split(":");
+      const hours = Number(hoursStr || 0);
+      const minutes = Number(minutesStr || 0);
+      if (!Number.isNaN(hours) && !Number.isNaN(minutes)) {
+        eventDateObj.setHours(hours, minutes, 0, 0);
+      }
+    }
+    const now = new Date();
+    return eventDateObj.getTime() < now.getTime();
+  };
+
+  const handleDownload = (ticket) => {
+    const { eventId, paymentAmount, paymentStatus, count } = ticket || {};
+    const { title, description, date, time, location } = eventId || {};
+    const formattedDate = date ? new Date(date).toLocaleDateString() : "";
+    const formattedTime = time ? time.slice(0, 5) : "";
+
+    const printableHtml = `<!doctype html>
+  <html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Ticket - ${title || "Event"}</title>
+    <style>
+      body { font-family: Arial, sans-serif; padding: 24px; background: #f8fafc; }
+      .card { max-width: 720px; margin: 0 auto; background: #fff; border: 1px solid #ddd; border-radius: 16px; }
+      .header { background: linear-gradient(90deg, #4f46e5, #7c3aed); color: #fff; padding: 20px; }
+      .title { font-size: 20px; font-weight: bold; margin: 0; }
+      .section { padding: 20px; }
+      .row { display: flex; justify-content: space-between; margin: 8px 0; }
+      .label { color: #666; }
+      .value { font-weight: 600; }
+      .footer { padding: 16px 20px; border-top: 1px solid #eee; display: flex; justify-content: space-between; }
+      .badge { background: #eef2ff; color: #4338ca; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: bold; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="header">
+        <div class="badge">${count > 1 ? `${count} tickets` : "1 ticket"}</div>
+        <h1 class="title">${title || "Event"}</h1>
+      </div>
+      <div class="section">
+        <div class="row"><div class="label">Description</div><div class="value">${
+          description || "-"
+        }</div></div>
+        <div class="row"><div class="label">Date</div><div class="value">${formattedDate}</div></div>
+        <div class="row"><div class="label">Time</div><div class="value">${formattedTime}</div></div>
+        <div class="row"><div class="label">Location</div><div class="value">${
+          location || "-"
+        }</div></div>
+      </div>
+      <div class="footer">
+        <div>Status: ${paymentStatus || "-"}</div>
+        <div>₹${paymentAmount || 0}</div>
+      </div>
+    </div>
+  </body>
+  </html>`;
+
+    const printWindow = window.open("", "_blank", "width=800,height=600");
+    if (printWindow) {
+      printWindow.document.open();
+      printWindow.document.write(printableHtml);
+      printWindow.document.close();
+      printWindow.onload = () => {
+        printWindow.print();
+        printWindow.close();
+      };
+    }
+  };
+
   if (!user || isLoading) {
     return <Spinner />;
   }
@@ -100,6 +176,7 @@ const Page = () => {
                 eventId || {};
               const formattedDate = new Date(date).toLocaleDateString();
               const formattedTime = time?.slice(0, 5);
+              const expired = isEventExpired(date, time);
 
               return (
                 <div
@@ -117,7 +194,11 @@ const Page = () => {
                   </div>
 
                   {/* Header */}
-                  <div className="bg-gradient-to-r from-indigo-600 to-purple-700 px-6 py-5 relative overflow-hidden">
+                  <div
+                    className={`bg-gradient-to-r from-indigo-600 to-purple-700 px-6 py-5 relative overflow-hidden ${
+                      expired ? "opacity-80" : ""
+                    }`}
+                  >
                     {/* Decorative pattern */}
                     <div className="absolute inset-0 opacity-10">
                       <div
@@ -167,16 +248,38 @@ const Page = () => {
 
                     <div className="flex items-center justify-between pt-4 border-t border-gray-100">
                       <div className="flex items-center">
-                        <div className="bg-green-100 p-2 rounded-full mr-2">
-                          <Check className="h-4 w-4 text-green-600" />
+                        <div
+                          className={`${
+                            expired ? "bg-red-100" : "bg-green-100"
+                          } p-2 rounded-full mr-2`}
+                        >
+                          <Check
+                            className={`h-4 w-4 ${
+                              expired ? "text-red-600" : "text-green-600"
+                            }`}
+                          />
                         </div>
-                        <span className="text-green-600 font-medium">
-                          {paymentStatus}
+                        <span
+                          className={`${
+                            expired ? "text-red-600" : "text-green-600"
+                          } font-medium`}
+                        >
+                          {expired ? "Expired" : paymentStatus}
                         </span>
                       </div>
 
-                      <div className="flex items-center text-lg font-bold text-indigo-700">
-                        <span>₹{paymentAmount}</span>
+                      <div className="flex items-center gap-3">
+                        <div className="text-lg font-bold text-indigo-700">
+                          <span>₹{paymentAmount}</span>
+                        </div>
+                        <button
+                          onClick={() => handleDownload(card)}
+                          className="inline-flex items-center gap-2 px-3 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 transition"
+                          aria-label="Download ticket"
+                        >
+                          <DownloadIcon className="h-4 w-4" />
+                          Download
+                        </button>
                       </div>
                     </div>
                   </div>
