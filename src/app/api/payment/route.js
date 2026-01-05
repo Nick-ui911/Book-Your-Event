@@ -41,7 +41,7 @@ export async function POST(req) {
           {
             type: "credit",
             amount,
-            description: `Received payment for event ${eventId}`,
+            description: `Received payment for event ${eventName}`,
           },
         ],
       });

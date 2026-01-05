@@ -135,7 +135,7 @@ const Page = () => {
                 </h2>
                 <div className="flex items-center bg-white bg-opacity-20 backdrop-blur-sm rounded-full px-3 py-1.5">
                   <Shield className="h-4 w-4 mr-1.5" />
-                  <span className="text-sm font-medium">
+                  <span className="text-sm text-black font-medium">
                     Secure Wallet
                   </span>
                 </div>
@@ -182,9 +182,6 @@ const Page = () => {
               <Activity className="h-5 w-5 mr-2 text-blue-600" />
               Transaction History
             </h2>
-            <button className="p-2 rounded-full hover:bg-gray-100 transition-colors">
-              <MoreHorizontal className="h-5 w-5 text-gray-500" />
-            </button>
           </div>
 
           {/* Filters */}
